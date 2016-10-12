@@ -7,5 +7,9 @@ package org.excelyus.exceptions;
  * Time: 16:21<br/>
  * To change this template use File | Settings | File Templates.
  */
-public class NullValueFoundOnNotNullableField {
+public class NullValueFoundOnNotNullableField extends Exception {
+
+    public NullValueFoundOnNotNullableField(String message) {
+        super(message);
+    }
 }

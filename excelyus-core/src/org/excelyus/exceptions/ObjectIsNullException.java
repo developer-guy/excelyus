@@ -7,5 +7,8 @@ package org.excelyus.exceptions;
  * Time: 16:29<br/>
  * To change this template use File | Settings | File Templates.
  */
-public class ObjectIsNullException {
+public class ObjectIsNullException extends Exception {
+    public ObjectIsNullException(String message) {
+        super(message);
+    }
 }

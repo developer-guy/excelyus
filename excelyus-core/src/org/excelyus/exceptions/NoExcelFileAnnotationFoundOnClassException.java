@@ -7,5 +7,9 @@ package org.excelyus.exceptions;
  * Time: 14:17<br/>
  * To change this template use File | Settings | File Templates.
  */
-public class NoExcelFileAnnotationFoundOnClassException {
+public class NoExcelFileAnnotationFoundOnClassException extends Exception {
+
+    public NoExcelFileAnnotationFoundOnClassException(String message) {
+        super(message);
+    }
 }
