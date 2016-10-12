@@ -25,17 +25,13 @@
         </developer>
     </developers>
 
-    <contributors>
-        <contributor>
-            <name>Ercan Canlier</name>
-            <email>ercancanlier@gmail.com</email>
-            <organization>Excelyus</organization>
-            <roles>
-                <role>architect</role>
-            </roles>
-            <timezone>Turkey/Istanbul</timezone>
-        </contributor>
-    </contributors>
 
-
+    <dependencies>
+        <!-- Log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+    </dependencies>
 </project>
