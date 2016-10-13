@@ -4,11 +4,12 @@ package org.excelyus.exceptions;
  * Created by IntelliJ IDEA.<br/>
  * User: Batuhan Apaydin<br/>
  * Date: 12.10.2016<br/>
- * Time: 16:29<br/>
+ * Time: 14:17<br/>
  * To change this template use File | Settings | File Templates.
  */
-public class ObjectIsNullException extends Exception {
-    public ObjectIsNullException(String message) {
+public class DifferentObjectTypeThenExpectedException extends Exception {
+
+    public DifferentObjectTypeThenExpectedException(String message) {
         super(message);
     }
 }

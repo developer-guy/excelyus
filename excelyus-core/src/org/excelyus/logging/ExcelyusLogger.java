@@ -1,4 +1,4 @@
-package org.excelyus.logger;
+package org.excelyus.logging;
 
 import org.apache.log4j.Logger;
 
@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
  * Time: 13:20<br/>
  * To change this template use File | Settings | File Templates.
  */
-public class ExcelyusLogger{
+public final class ExcelyusLogger{
 
     public static Logger buildLogger(String name){
         return ExcelyusLoggerFactory.getLogger(name);

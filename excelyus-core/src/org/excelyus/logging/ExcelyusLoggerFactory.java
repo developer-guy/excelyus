@@ -1,7 +1,6 @@
-package org.excelyus.logger;
+package org.excelyus.logging;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 
 /**
  * Created by IntelliJ IDEA.<br/>
@@ -10,7 +9,7 @@ import org.apache.log4j.spi.LoggerFactory;
  * Time: 13:27<br/>
  * To change this template use File | Settings | File Templates.
  */
-public class ExcelyusLoggerFactory{
+public final class ExcelyusLoggerFactory{
     public static Logger getLogger(String s) {
         return Logger.getLogger(s);
     }
