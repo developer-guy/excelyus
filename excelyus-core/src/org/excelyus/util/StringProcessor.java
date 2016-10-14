@@ -1,6 +1,6 @@
 package org.excelyus.util;
 
-import org.excelyus.analyzing.ClassAnnotationProcessor;
+import org.excelyus.worker.ExcelWorker;
 
 /**
  * Created by IntelliJ IDEA.<br/>
@@ -16,7 +16,8 @@ public final class StringProcessor {
     }
 
     public static String buildExtension(Class<?> clasz){
-        String extension = ClassAnnotationProcessor.getExcelFormat(clasz);
+        ExcelWorker excelWorker = new ExcelWorker();
+        String extension = excelWorker.getExcelFormat(clasz);
         if(!extension.startsWith(".")){
             extension = "." + extension;
         }

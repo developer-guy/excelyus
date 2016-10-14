@@ -2,13 +2,15 @@ package org.excelyus.creator;
 
 import org.apache.log4j.Logger;
 import org.excelyus.analyzing.ClassAnnotationProcessor;
-import org.excelyus.analyzing.ClassTypeChecker;
-import org.excelyus.exceptions.*;
+import org.excelyus.exceptions.DifferentObjectTypeThenExpectedException;
+import org.excelyus.exceptions.NoExcelFileAnnotationFoundOnClassException;
+import org.excelyus.exceptions.NullValueFoundOnNotNullableField;
+import org.excelyus.exceptions.UnknownFileExtension;
 import org.excelyus.logging.ExcelyusLogger;
 import org.excelyus.option.HeaderOptions;
-import org.excelyus.worker.ExcelFileWorker;
+import org.excelyus.worker.ExcelWorker;
 
-import java.io.IOException;
+import java.beans.IntrospectionException;
 import java.util.List;
 
 /**
@@ -20,20 +22,21 @@ import java.util.List;
  */
 public final class ExcelCreator {
     private static final Logger LOG = ExcelyusLogger.buildLogger(ClassAnnotationProcessor.class);
-    private Class<?> clasz = null;
+    private Class<?> clasz;
+    private HeaderOptions headerOptions;
 
-    public ExcelCreator(Class<?> clasz) throws NoExcelFileAnnotationFoundOnClassException {
+    public ExcelCreator(Class<?> clasz,HeaderOptions headerOptions) throws NoExcelFileAnnotationFoundOnClassException {
         ClassAnnotationProcessor.analyzeClaszAnnotationBeforeInitialize(clasz);
         this.clasz = clasz;
+        this.headerOptions = headerOptions;
     }
 
-    public byte[] createExcelFile(List<?> objects, HeaderOptions headerOptions) throws NullValueFoundOnNotNullableField, DifferentObjectTypeThenExpectedException, UnknownFileExtension, IOException {
-        ExcelFileWorker excelFileWorker = new ExcelFileWorker();
+    public byte[] createExcelFile(List<?> objects) throws NullValueFoundOnNotNullableField, DifferentObjectTypeThenExpectedException, UnknownFileExtension {
+        ExcelWorker excelFileWorker = new ExcelWorker();
         if(objects == null || objects.size() == 0){
             LOG.info("Objects found null or size equal zero.");
+            return null;
         }
-        ClassTypeChecker.checkObjectsType(clasz, objects);
-        ClassAnnotationProcessor.analyzeClaszAnnotations(objects);
        return excelFileWorker.createExcelFile(clasz,objects,headerOptions);
     }
 }

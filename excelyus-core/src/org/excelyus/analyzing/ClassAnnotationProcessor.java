@@ -3,6 +3,7 @@ package org.excelyus.analyzing;
 import org.apache.log4j.Logger;
 import org.excelyus.annotations.Excel;
 import org.excelyus.annotations.Column;
+import org.excelyus.exceptions.DifferentObjectTypeThenExpectedException;
 import org.excelyus.exceptions.NoExcelFileAnnotationFoundOnClassException;
 import org.excelyus.exceptions.NullValueFoundOnNotNullableField;
 import org.excelyus.helper.MessagesHelper;
@@ -34,31 +35,27 @@ public final class ClassAnnotationProcessor {
         }
     }
 
-    public static void analyzeClaszAnnotations(List<?> objects) throws NullValueFoundOnNotNullableField {
-        if(objects != null && objects.size() != 0) {
-            for (Object obj : objects) {
-                Field[] declaredFields = obj.getClass().getDeclaredFields();
-                try {
-                    if (declaredFields.length == 0) {
-                       LOG.error(MessagesHelper.get("NoFieldFoundInClassException.message", obj.getClass().getName()).toString());
-                    }
-                    for (Field field : declaredFields) {
-                        field.setAccessible(true);
-                        Column annotation = field.getAnnotation(Column.class);
-                        Object o = field.get(obj);
-                        if (o == null && !annotation.nullable()) {
-                            throw new NullValueFoundOnNotNullableField(MessagesHelper.get("NullValueFoundOnNotNullableField.message", field.getName()).toString());
-                        }
-                    }
-                } catch (IllegalAccessException e) {
-                    LOG.error(e.toString());
+    public static void analyzeClaszAnnotations(Class<?> clasz, List<?> objects) throws NullValueFoundOnNotNullableField, DifferentObjectTypeThenExpectedException {
+        ObjectTypeChecker.checkObjectsType(clasz, objects);
+        if (objects != null && objects.size() != 0) {
+            Object obj = objects.get(0);
+            Field[] declaredFields = obj.getClass().getDeclaredFields();
+            try {
+                if (declaredFields.length == 0) {
+                    LOG.error(MessagesHelper.get("NoFieldFoundInClassException.message", obj.getClass().getName()).toString());
                 }
+                for (Field field : declaredFields) {
+                    field.setAccessible(true);
+                    Column annotation = field.getAnnotation(Column.class);
+                    Object o = field.get(obj);
+                    if (o == null && !annotation.nullable()) {
+                        throw new NullValueFoundOnNotNullableField(MessagesHelper.get("NullValueFoundOnNotNullableField.message", field.getName()).toString());
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                LOG.error(e.toString());
             }
         }
     }
 
-    public static String getExcelFormat(Class<?> clasz){
-        Excel excel = clasz.getAnnotation(Excel.class);
-        return excel.format();
-    }
 }

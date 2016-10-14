@@ -14,6 +14,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Excel {
-    String fileName();
     String format() default "xls";
 }
